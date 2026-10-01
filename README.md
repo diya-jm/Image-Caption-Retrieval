@@ -4,8 +4,8 @@
 
 Type a sentence, get the matching photos. This project replicates the caption-to-image retrieval models from *"Neural Caption-Image Retrieval"* (Qian & Lamberti, Stanford CS229) and extends them with one additional model of our own.
 
-**Team:** `<Name 1> (<SRN>)` and `<Name 2> (<SRN>)`
-**Section:** `<section>`  |  **Faculty:** `<faculty name>`
+**Team:** `Chirag Arun Yadwad (PES2UG24CS136)` , `Diya J Marar (PES2UG24CS162)`
+**Section:** `C`  |  **Faculty:** `Dr. Nazmin Begum`
 
 ---
 
