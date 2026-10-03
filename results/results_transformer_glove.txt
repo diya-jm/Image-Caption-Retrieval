@@ -1,0 +1,27 @@
+== transformer_glove | {'rnn': 'transformer', 'glove': '../data/glove.6B.300d.txt', 'data': '../data/coco', 'results': '../results', 'ckpt': '/content/drive/MyDrive/ckpt/transformer.pt', 'name': None, 'epochs': 30, 'batch': 128, 'lr': 0.0001, 'margin': 0.1, 'dim': 1024, 'patience': 5, 'seed': 0} | device=cuda
+epoch   1 loss 3.0553 | val R@1 22.6 R@5 55.7 R@10 73.5 mean_r 11.3 | 189s
+epoch   2 loss 0.6530 | val R@1 25.8 R@5 61.5 R@10 77.5 mean_r 9.5 | 193s
+epoch   3 loss 0.4790 | val R@1 26.0 R@5 62.0 R@10 79.0 mean_r 9.5 | 193s
+epoch   4 loss 0.3925 | val R@1 28.3 R@5 64.9 R@10 80.1 mean_r 8.9 | 193s
+epoch   5 loss 0.3363 | val R@1 30.3 R@5 67.3 R@10 82.3 mean_r 8.2 | 192s
+epoch   6 loss 0.2978 | val R@1 32.0 R@5 68.9 R@10 83.8 mean_r 7.8 | 192s
+epoch   7 loss 0.2669 | val R@1 32.2 R@5 68.4 R@10 83.3 mean_r 7.8 | 192s
+epoch   8 loss 0.2436 | val R@1 33.2 R@5 70.2 R@10 84.4 mean_r 7.5 | 192s
+epoch   9 loss 0.2253 | val R@1 33.1 R@5 69.8 R@10 83.9 mean_r 7.7 | 191s
+epoch  10 loss 0.2091 | val R@1 35.1 R@5 70.8 R@10 84.9 mean_r 7.2 | 191s
+epoch  11 loss 0.1950 | val R@1 34.4 R@5 70.4 R@10 84.3 mean_r 7.7 | 191s
+epoch  12 loss 0.1843 | val R@1 33.3 R@5 70.4 R@10 84.1 mean_r 7.8 | 191s
+epoch  13 loss 0.1732 | val R@1 33.8 R@5 70.7 R@10 84.5 mean_r 7.6 | 191s
+epoch  14 loss 0.1646 | val R@1 34.5 R@5 71.1 R@10 84.8 mean_r 7.7 | 191s
+epoch  15 loss 0.1570 | val R@1 34.8 R@5 71.1 R@10 85.3 mean_r 7.6 | 191s
+epoch  16 loss 0.1495 | val R@1 35.1 R@5 71.7 R@10 85.4 mean_r 7.6 | 191s
+epoch  17 loss 0.1428 | val R@1 34.2 R@5 70.7 R@10 84.7 mean_r 7.8 | 191s
+epoch  18 loss 0.1377 | val R@1 35.5 R@5 71.7 R@10 84.9 mean_r 7.4 | 190s
+epoch  19 loss 0.1318 | val R@1 35.6 R@5 72.2 R@10 85.5 mean_r 8.1 | 190s
+epoch  20 loss 0.1273 | val R@1 35.1 R@5 71.7 R@10 84.6 mean_r 7.5 | 191s
+epoch  21 loss 0.1229 | val R@1 34.3 R@5 70.3 R@10 84.4 mean_r 8.1 | 190s
+epoch  22 loss 0.1192 | val R@1 35.1 R@5 71.5 R@10 84.9 mean_r 7.2 | 190s
+epoch  23 loss 0.1146 | val R@1 35.1 R@5 71.3 R@10 85.0 mean_r 7.4 | 190s
+epoch  24 loss 0.1110 | val R@1 35.2 R@5 71.7 R@10 85.1 mean_r 7.7 | 191s
+early stopping (no val R@10 improvement for 5 epochs)
+best val R@10: 85.5 (checkpoint: /content/drive/MyDrive/ckpt/transformer.pt)

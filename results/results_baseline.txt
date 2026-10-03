@@ -1,0 +1,2 @@
+Baseline        : R@1 9.3 | R@10 45.9 | mean rank 37.4
+Baseline+Weight : R@1 11.2 | R@10 51.5 | mean rank 26.6
