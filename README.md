@@ -140,6 +140,8 @@ Test-set results. "Paper" values are from Table 1 of the reference paper; "Ours"
 | **Transformer + GloVe (ours)** | n/a | **33.7** | n/a | **83.3** | n/a | **8.4** |
 
 Full R@5 values for the neural models: GRU 65.9, LSTM 66.2, Transformer 69.9.
+![Paper vs ours](results/figures/1_paper_vs_ours.png)
+
 
 ### Reported vs. obtained: discussion
 
