@@ -1,0 +1,21 @@
+== gru_lr1e-4 | {'rnn': 'gru', 'glove': '../data/glove.6B.300d.txt', 'data': '../data/coco', 'results': '../results', 'ckpt': '/content/drive/MyDrive/ckpt/gru_lr1e-4.pt', 'name': 'gru_lr1e-4', 'epochs': 30, 'batch': 128, 'lr': 0.0001, 'margin': 0.1, 'dim': 1024, 'patience': 5, 'seed': 0} | device=cuda
+epoch   1 loss 1.8673 | val R@1 27.0 R@5 62.2 R@10 77.9 mean_r 9.4 | 113s
+== gru_lr1e-4 | {'rnn': 'gru', 'glove': '../data/glove.6B.300d.txt', 'data': '../data/coco', 'results': '../results', 'ckpt': '/content/drive/MyDrive/my_ckpt/gru_lr1e-4.pt', 'name': 'gru_lr1e-4', 'epochs': 30, 'batch': 128, 'lr': 0.0001, 'margin': 0.1, 'dim': 1024, 'patience': 5, 'seed': 0} | device=cuda
+epoch   1 loss 1.8673 | val R@1 27.0 R@5 62.2 R@10 77.9 mean_r 9.4 | 116s
+epoch   2 loss 0.4604 | val R@1 31.0 R@5 67.0 R@10 82.3 mean_r 8.0 | 116s
+epoch   3 loss 0.3381 | val R@1 31.8 R@5 68.6 R@10 83.2 mean_r 7.7 | 116s
+epoch   4 loss 0.2735 | val R@1 32.1 R@5 70.5 R@10 84.4 mean_r 7.3 | 116s
+epoch   5 loss 0.2298 | val R@1 34.8 R@5 71.8 R@10 85.2 mean_r 7.2 | 117s
+epoch   6 loss 0.2006 | val R@1 35.2 R@5 72.8 R@10 86.8 mean_r 6.8 | 117s
+epoch   7 loss 0.1772 | val R@1 35.8 R@5 72.4 R@10 85.9 mean_r 6.8 | 116s
+epoch   8 loss 0.1597 | val R@1 36.1 R@5 74.5 R@10 86.4 mean_r 6.7 | 116s
+epoch   9 loss 0.1458 | val R@1 37.2 R@5 74.2 R@10 86.8 mean_r 6.8 | 116s
+epoch  10 loss 0.1341 | val R@1 38.2 R@5 74.0 R@10 87.4 mean_r 6.5 | 116s
+epoch  11 loss 0.1243 | val R@1 37.4 R@5 74.0 R@10 87.6 mean_r 6.4 | 116s
+epoch  12 loss 0.1167 | val R@1 38.2 R@5 74.1 R@10 87.1 mean_r 6.5 | 116s
+epoch  13 loss 0.1091 | val R@1 37.3 R@5 74.1 R@10 87.0 mean_r 6.7 | 116s
+epoch  14 loss 0.1033 | val R@1 38.9 R@5 74.7 R@10 86.6 mean_r 6.6 | 115s
+epoch  15 loss 0.0970 | val R@1 38.7 R@5 74.1 R@10 86.6 mean_r 6.8 | 115s
+epoch  16 loss 0.0920 | val R@1 38.9 R@5 74.5 R@10 86.7 mean_r 6.6 | 115s
+early stopping (no val R@10 improvement for 5 epochs)
+best val R@10: 87.6 (checkpoint: /content/drive/MyDrive/my_ckpt/gru_lr1e-4.pt)
