@@ -1,2 +1,5 @@
 numpy
 torch
+streamlit
+pandas
+matplotlib
