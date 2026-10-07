@@ -138,14 +138,14 @@ LOG_RE = re.compile(
 )
 
 LOG_ALIASES = {
-    "GRU (lr 1e-4)": ["results_gru_glove.txt"],
-    "LSTM (lr 1e-4)": ["results_lstm_glove.txt"],
+    "GRU (lr 1e-4)": ["results_gru_lr1e-4.txt"],
+    "LSTM (lr 1e-4)": ["results_lstm_lr1e-4.txt"],
     "Transformer (lr 1e-4)": ["results_transformer_glove.txt"],
-    "GRU (lr 1e-3)": [],
-    "LSTM (lr 1e-3)": [],
+    "GRU (lr 1e-3)": ["results_gru_glove.txt"],
+    "LSTM (lr 1e-3)": ["results_lstm_glove.txt"],
 }
 
-@st.cache_data
+
 def load_log(model_name):
     """Load a training log if it exists locally."""
     for filename in LOG_ALIASES.get(model_name, []):
