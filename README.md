@@ -90,18 +90,18 @@ cd code
 # Baselines
 python baseline.py --glove ../data/glove.6B.300d.txt
 
-# Replicated models
-python main.py --rnn gru  --glove ../data/glove.6B.300d.txt
-python main.py --rnn lstm --glove ../data/glove.6B.300d.txt
+# Replicated models (main runs use lr 0.0001; we also ran lr 0.001, see Results)
+python main.py --rnn gru  --glove ../data/glove.6B.300d.txt --lr 0.0001 --ckpt ../checkpoints/gru_lr1e-4.pt
+python main.py --rnn lstm --glove ../data/glove.6B.300d.txt --lr 0.0001 --ckpt ../checkpoints/lstm_lr1e-4.pt
 
-# Our extension (note the lower learning rate)
+# Our extension
 python main.py --rnn transformer --glove ../data/glove.6B.300d.txt --lr 0.0001
 
 # Evaluate a saved model on the test set
-python eval_only.py --ckpt ../checkpoints/gru_glove.pt
+python eval_only.py --ckpt ../checkpoints/gru_lr1e-4.pt
 
 # Interactive demo (prints the indices of the top-10 test images)
-python eval_custom_input.py --ckpt ../checkpoints/gru_glove.pt
+python eval_custom_input.py --ckpt ../checkpoints/gru_lr1e-4.pt
 ```
 
 Training options: `--epochs`, `--batch`, `--lr`, `--margin`, `--dim`, `--patience`, `--ckpt` (where to save the best model). Run `python main.py --help` for the full list.
@@ -111,7 +111,7 @@ Training options: `--epochs`, `--batch`, `--lr`, `--margin`, `--dim`, `--patienc
 | Setting | Value |
 |---|---|
 | Optimiser | Adam |
-| Learning rate | 0.001 (GRU, LSTM), 0.0001 (Transformer) |
+| Learning rate | 0.0001 (main runs: GRU, LSTM, Transformer); 0.001 for the first GRU/LSTM runs (kept as an ablation) |
 | Batch size | 128 captions |
 | Margin | 0.1 |
 | Embedding dimension | 1,024 (images and captions) |
@@ -121,7 +121,7 @@ Training options: `--epochs`, `--batch`, `--lr`, `--margin`, `--dim`, `--patienc
 | Seed | 0 (single run per model) |
 | Hardware | Google Colab T4 GPU |
 
-Epoch time: about 120 s (GRU/LSTM) and about 191 s (Transformer). The GRU stopped after 20 epochs (best epoch 15, val R@10 83.1), and the Transformer after 24 (best epoch 19, val R@10 85.5).
+Epoch time: about 115 s (GRU), 144 s (LSTM) and 191 s (Transformer). Stopping epoch (best epoch), best val R@10: GRU lr 1e-4: 16 (11), 87.6; LSTM lr 1e-4: 20 (15), 87.3; Transformer: 24 (19), 85.5; GRU lr 1e-3: 20 (15), 83.1; LSTM lr 1e-3: 20 (15), 83.2.
 
 ## Evaluation
 
@@ -129,26 +129,26 @@ We report **Recall@K** (R@K): the percentage of caption queries for which the co
 
 ## Results
 
-Test-set results. "Paper" values are from Table 1 of the reference paper; "Ours" are from our own runs.
-
 | Method | R@1 (paper) | R@1 (ours) | R@10 (paper) | R@10 (ours) | Mean rank (paper) | Mean rank (ours) |
 |---|---|---|---|---|---|---|
 | Baseline | 10.3 | 9.3 | 17.1 | 45.9 | 176.1 | 37.4 |
 | Baseline + Weight | 19.8 | 11.2 | 65.5 | 51.5 | 10.5 | 26.6 |
-| GRU + GloVe | 37.0 | 30.6 | 86.8 | 80.3 | 7.3 | 9.7 |
-| LSTM + GloVe | 35.4 | 30.4 | 86.2 | 80.5 | 7.5 | 10.1 |
-| **Transformer + GloVe (ours)** | n/a | **33.7** | n/a | **83.3** | n/a | **8.4** |
+| GRU + GloVe (lr 1e-4) | 37.0 | 36.5 | 86.8 | 85.2 | 7.3 | 7.6 |
+| LSTM + GloVe (lr 1e-4) | 35.4 | 36.5 | 86.2 | 85.4 | 7.5 | 7.6 |
+| **Transformer + GloVe (ours, lr 1e-4)** | n/a | 33.7 | n/a | 83.3 | n/a | 8.4 |
+| Ablation: GRU, lr 1e-3 | n/a | 30.6 | n/a | 80.3 | n/a | 9.7 |
+| Ablation: LSTM, lr 1e-3 | n/a | 30.4 | n/a | 80.5 | n/a | 10.1 |
 
-Full R@5 values for the neural models: GRU 65.9, LSTM 66.2, Transformer 69.9.
+R@5: GRU 72.2, LSTM 72.5, Transformer 69.9 (lr 1e-3: GRU 65.9, LSTM 66.2). All results are single runs (seed 0).
 ![Paper vs ours](results/figures/1_paper_vs_ours.png)
 
 
 ### Reported vs. obtained: discussion
 
-**What matches.** The overall picture of the paper is reproduced: the GRU and LSTM encoders are far better than the averaged-GloVe baselines, and the GRU and LSTM perform very similarly to each other (as in the paper, the difference is about a point or less in our runs).
+**What matches.** The recurrent encoders beat both averaged-GloVe baselines by a wide margin, and GRU and LSTM perform almost identically (R@1 36.5 vs 36.5, R@10 85.2 vs 85.4), as in the paper. Our GRU is within 0.5 R@1 and 1.6 R@10 of the paper's GRU; our LSTM is 1.1 R@1 above and 0.8 R@10 below the paper's LSTM.
 
 **What differs.**
-- **GRU and LSTM are 3 to 6 points below the paper** (for example GRU R@10: 80.3 vs 86.8). Likely reasons: we used a learning rate of 0.001, whereas the paper reports 0.05; we added gradient clipping, which is not in the paper; our tokenisation and handling of words missing from GloVe are our own simple choices; and each model was trained once with one seed. We did not run experiments to confirm which of these matters most.
+- **Learning rate was the main cause of our initial gap.** Our first runs (lr 0.001) were 5 to 6.5 points below the paper. Lowering the lr to 0.0001 gave about +6 R@1 and +5 R@10. We tried 0.0001 after seeing the 0.001 results and report both. The remaining gap (0.5 to 1.6 points) may come from gradient clipping (not in the paper), our tokenisation and OOV handling, the seed, or loss and negative-sampling details. We did not test which.
 - **Baseline:** our plain baseline has a similar R@1 (9.3 vs 10.3) but much better R@10 and mean rank than the paper's (45.9 vs 17.1, 37.4 vs 176.1). Our "Baseline + Weight" is *worse* than the paper's. The paper does not specify its baseline in full (regularisation, handling of unknown words, how captions are combined), so our implementation (closed-form ridge regression, regularisation 1.0, random vectors for unknown words) probably differs from theirs. The paper's own baseline row looks unusual (R@1 10.3 but R@10 only 17.1).
 - The accompanying poster reports lower R@10 values (75.7% and 78.0%) than the paper's table. The poster appears to be an earlier, in-progress version, so we compare against the paper's Table 1.
 - The baseline was evaluated on the test set and its regularisation was not tuned.
@@ -159,14 +159,12 @@ Full R@5 values for the neural models: GRU 65.9, LSTM 66.2, Transformer 69.9.
 
 **Why we chose it.** Transformers are not used in the reference paper, and they are a natural, easily explained swap for the recurrent encoder. Self-attention lets words such as "guy", "bike" and "train" interact directly, which may help with multi-object captions, and averaging over words avoids relying on a single last hidden state.
 
-**Result.** The Transformer is the best model we trained: R@1 33.7, R@10 83.3 and mean rank 8.4 on the test set, compared with 30.6 / 80.3 / 9.7 for the GRU and 30.4 / 80.5 / 10.1 for the LSTM. It also reached a higher validation R@10 (85.5 vs 83.1 for the GRU). It still falls short of the paper's GRU numbers (R@10 86.8), but it closes much of the gap.
+**Result.** Compared with the lr 0.001 GRU/LSTM the Transformer looked best (R@1 33.7 vs 30.6 / 30.4), but that comparison was unfair because it used lr 0.0001. At the matched lr 0.0001 the recurrent encoders win: GRU 36.5 / 72.2 / 85.2 / 7.6 (R@1 / R@5 / R@10 / mean rank), LSTM 36.5 / 72.5 / 85.4 / 7.6, Transformer 33.7 / 69.9 / 83.3 / 8.4. The Transformer is about 2.8 R@1 and 2 R@10 behind, and 33% slower per epoch than the LSTM (66% slower than the GRU). So it gives no benefit in our setup.
 
 **Caveats.**
-- These are single runs with one seed. The gap to the GRU (about 3 points) is larger than the epoch-to-epoch fluctuation we saw (1 to 2 points) but we did not repeat the runs, so we cannot give a confidence interval.
-- The Transformer used a lower learning rate (0.0001) than the GRU and LSTM (0.001), so the comparison is not perfectly controlled.
-- The Transformer is about 60% slower per epoch and has more parameters.
-- Why it is better is a hypothesis (direct word-to-word attention, averaging over words), not something we tested with an ablation.
-- Its training loss kept falling after the validation score levelled off (mild overfitting); early stopping selected the best epoch.
+- Single runs, one seed; we did not repeat them, so we cannot give a confidence interval.
+- The Transformer was tried at one learning rate only and not tuned, so a better-tuned one might close the gap.
+- Possible reasons it is worse (untested): captions are short, so long-range attention adds little; Transformers are more sensitive to hyper-parameters; its training loss kept falling after validation R@10 plateaued (mild overfitting, handled by early stopping).
 
 ## Demo
 
